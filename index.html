@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meno Store | متجر مينو - خدمات الألعاب ودعم التواصل الاجتماعي</title>
+    <!-- Google Fonts & Tailwind CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        premium: {
+                            gold: '#D4AF37',
+                            darkBg: '#0B0F19',
+                            darkCard: '#151D30',
+                            lightBg: '#F8FAFC',
+                            lightCard: '#FFFFFF',
+                            accent: '#3B82F6',
+                            accentHover: '#2563EB'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', 'Tajawal', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .glassmorphism {
+            background: rgba(21, 29, 48, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .light .glassmorphism {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #3B82F6; border-radius: 10px; }
+        @keyframes scaleCheck {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-checkmark { animation: scaleCheck 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+    </style>
+</head>
+<body class="bg-premium-darkBg text-slate-100 min-h-screen flex flex-col antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-40 w-full border-b border-slate-800 dark:border-slate-800 light:border-slate-200 glassmorphism transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logotype -->
+            <a href="#" onclick="window.appRouter.navigate('/')" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center shadow-lg shadow-blue-500/20 transform group-hover:rotate-6 transition-transform">
+                    <span class="text-white font-black text-xl tracking-wider">M</span>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400 dark:from-white dark:to-slate-400 light:from-slate-900 light:to-slate-700 font-sans tracking-tight">Meno Store</span>
+                    <span class="text-xs text-blue-400 font-medium tracking-widest mt-[-2px]">متجر مينو</span>
+                </div>
+            </a>
+
+            <!-- Universal Dynamic Utility Controls -->
+            <div class="flex items-center gap-4">
+                <!-- Currency Switcher Toggle -->
+                <div class="flex p-1 bg-slate-900 dark:bg-slate-900 light:bg-slate-200 rounded-xl border border-slate-800 dark:border-slate-800 light:border-slate-300">
+                    <button id="btnCurrencyEGP" onclick="window.setCurrency('EGP')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 bg-blue-600 text-white shadow-md shadow-blue-600/10">EGP</button>
+                    <button id="btnCurrencyUSD" onclick="window.setCurrency('USD')" class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 text-slate-400 dark:text-slate-400 light:text-slate-600">USD</button>
+                </div>
+
+                <!-- Dark/Light Theme Switching System Component -->
+                <button onclick="window.toggleTheme()" class="p-2.5 rounded-xl bg-slate-900 dark:bg-slate-900 light:bg-slate-200 border border-slate-800 dark:border-slate-800 light:border-slate-300 text-slate-400 dark:text-slate-400 light:text-slate-600 hover:text-blue-400 transition-colors">
+                    <svg id="themeSun" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9H3m15.364-3.364l-.707.707M6.343 17.657l-.707.707M16.243 17.657l.707.707M6.343 6.343l.707.707M12 5a7 7 0 100 14 7 7 0 000-14z"/></svg>
+                    <svg id="themeMoon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 118.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main View Routing Context Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10" id="viewContainer"></main>
+
+    <!-- Premium Core Brand Footer Layout -->
+    <footer class="border-t border-slate-800 dark:border-slate-800 light:border-slate-200 glassmorphism mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-400 dark:text-slate-400 light:text-slate-600">
+            <div class="flex items-center gap-2">
+                <span class="font-bold text-slate-200 dark:text-slate-200 light:text-slate-800">Meno Store</span> &copy; 2026. جميع الحقوق محفوظة
+            </div>
+            <div class="flex items-center gap-6 text-xs">
+                <a href="#/pubg" class="hover:text-blue-400 transition-colors">ببجي موبايل</a>
+                <a href="#/freefire" class="hover:text-blue-400 transition-colors">فري فاير</a>
+                <a href="#/tiktok" class="hover:text-blue-400 transition-colors">تيك توك</a>
+                <a href="#/telegram" class="hover:text-blue-400 transition-colors">تيليجرام</a>
+                <a href="#/youtube" class="hover:text-blue-400 transition-colors">يوتيوب</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Firebase Script Architecture Base Core Modules -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
+        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAFqbNT-mYbEC6n0Tq50Fwhcd1GB90CJQw",
+            authDomain: "sultan-1d74f.firebaseapp.com",
+            projectId: "sultan-1d74f",
+            storageBucket: "sultan-1d74f.firebasestorage.app",
+            messagingSenderId: "956199308933",
+            appId: "1:956199308933:web:1e5bad3fa9da4a63c023ec",
+            measurementId: "G-5MRHT4YLLW"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const db = getFirestore(app);
+
+        window.saveOrderToFirestore = async (orderData) => {
+            try {
+                const docRef = await addDoc(collection(db, "orders"), {
+                    ...orderData,
+                    timestamp: serverTimestamp(),
+                    status: "Pending Confirmation"
+                });
+                console.log("Transaction successfully committed to Firestore: ", docRef.id);
+                return docRef.id;
+            } catch (e) {
+                console.error("Firestore exception captured: ", e);
+                return null;
+            }
+        };
+    </script>
+
+    <!-- Core App Router Engine Script & Application Logic -->
+    <script>
+        const CONVERSION_RATE = 50.49;
+        let currentCurrency = 'EGP';
+        let activeCheckoutService = null;
+        let tiktokQualitySliderVal = 95;
+
+        // Configuration Configurations Settings
+        const ADMIN_CHAT_ID = "1203957018"; 
+        const BOT_TOKEN = "8608199060:AAEUhYKVr1TgnMZzLcdAzmCShgaZZcQ1KZA";
+
+        const STORES_DATABASE = {
+            pubg: {
+                title: 'ببجي موبايل | PUBG Mobile UC',
+                banner: 'https://i.ibb.co/nqQfHg30/Screenshot.jpg',
+                type: 'id',
+                placeholder: 'أدخل رقم الأيدي (ID) الخاص بحسابك',
+                items: [
+                    { id: 'p1', name: '60 UC', priceEgp: 50 },
+                    { id: 'p2', name: '325 UC', priceEgp: 250 },
+                    { id: 'p3', name: '660 UC', priceEgp: 500 },
+                    { id: 'p4', name: '1800 UC', priceEgp: 1250 },
+                    { id: 'p5', name: '3850 UC', priceEgp: 2500 },
+                    { id: 'p6', name: '8100 UC', priceEgp: 5000 }
+                ]
+            },
+            freefire: {
+                title: 'فري فاير | Free Fire Diamonds',
+                banner: 'https://i.ibb.co/wZ3vrThM/IMG.jpg',
+                type: 'id',
+                placeholder: 'أدخل رقم الأيدي (ID) الخاص بحسابك',
+                items: [
+                    { id: 'f1', name: '50 Diamonds', priceEgp: 35 },
+                    { id: 'f2', name: '100 Diamonds', priceEgp: 60 },
+                    { id: 'f3', name: '210 Diamonds', priceEgp: 115 },
+                    { id: 'f4', name: '310 Diamonds', priceEgp: 170 },
+                    { id: 'f5', name: '520 Diamonds', priceEgp: 280 },
+                    { id: 'f6', name: '1060 Diamonds', priceEgp: 550 },
+                    { id: 'f7', name: '2200 Diamonds', priceEgp: 1100 }
+                ]
+            },
+            tiktok: {
+                title: 'تيك توك | TikTok Professional Services',
+                banner: 'https://i.ibb.co/Dfk1HSPH/Screenshot.jpg',
+                type: 'link',
+                placeholder: 'أدخل رابط الفيديو، الحساب أو التعليق المستهدف',
+                items: [
+                    { id: 't1', name: 'تعليقات عشوائية / مخصصة / إيموجي (لكل 1000)', priceEgp: 450 },
+                    { id: 't2', name: 'ردود احترافية على التعليقات (لكل 1000)', priceEgp: 450 },
+                    { id: 't3', name: 'متابعين حقيقيين - ضمان 10-30 يوم (لكل 1000)', priceEgp: 95, isSlidablyVariable: true },
+                    { id: 't4', name: 'متابعين عرب حقيقيين - إعلانات ممولة (لكل 1000)', priceEgp: 280 },
+                    { id: 't5', name: 'إعجابات عالية الجودة High-Quality (لكل 1000)', priceEgp: 12 },
+                    { id: 't6', name: 'إعجابات قديمة ثبات عالي - ضمان 365 يوم (لكل 1000)', priceEgp: 20 },
+                    { id: 't7', name: 'مشاهدات فيديو سريعة للغاية Ultra-Fast (لكل 1000)', priceEgp: 5 },
+                    { id: 't8', name: 'إعجابات البث المباشر (لكل 10,000)', priceEgp: 35 },
+                    { id: 't9', name: 'حفظ الفيديو - ضمان مدى الحياة (لكل 10,000)', priceEgp: 15 }
+                ]
+            },
+            telegram: {
+                title: 'تيليجرام | Telegram Premium Boosting',
+                banner: 'https://i.ibb.co/1f24cJcm/Screenshot.jpg',
+                type: 'link',
+                placeholder: 'أدخل رابط القناة أو المجموعة المستهدفة (@username)',
+                items: [
+                    { id: 'tg1', name: '1,000 عضو للمجموعات والقنوات - جودة عالية', priceEgp: 85 },
+                    { id: 'tg2', name: '5,000 عضو للمجموعات والقنوات - سرعة فائقة', priceEgp: 400 },
+                    { id: 'tg3', name: '10,000 عضو للمجموعات - حزمة الحوت الممتازة', priceEgp: 780 },
+                    { id: 'tg4', name: '1,000 مشاهدة لآخر 5 منشورات تلقائياً', priceEgp: 25 },
+                    { id: 'tg5', name: 'تصويت تلقائي مسابات واستطلاعات رأي (1000)', priceEgp: 40 }
+                ]
+            },
+            youtube: {
+                title: 'يوتيوب | YouTube Growth Accelerator',
+                banner: 'https://i.ibb.co/ymK3T3hF/Screenshot.jpg',
+                type: 'link',
+                placeholder: 'أدخل رابط القناة أو رابط فيديو اليوتيوب المستهدف',
+                items: [
+                    { id: 'y1', name: '1,000 مشترك حقيقي - ثبات وضمان مدى الحياة', priceEgp: 650 },
+                    { id: 'y2', name: '4,000 ساعة مشاهدة علنية - متوافقة تماماً مع شروط الربح', priceEgp: 1200 },
+                    { id: 'y3', name: '1,000 إعجاب لفيديو مستهدف عالي الجودة', priceEgp: 45 },
+                    { id: 'y4', name: 'الحزمة الذهبية المتكاملة (1K مشترك + 4K ساعة مشاهدة)', priceEgp: 1750 }
+                ]
+            }
+        };
+
+        window.calculatePrice = (baseEgp) => {
+            if (currentCurrency === 'EGP') {
+                return `${baseEgp.toFixed(2)} EGP`;
+            } else {
+                return `${(baseEgp / CONVERSION_RATE).toFixed(2)} USD`;
+            }
+        };
+
+        window.toggleTheme = () => {
+            const html = document.documentElement;
+            if (html.classList.contains('light')) {
+                html.classList.remove('light');
+                document.getElementById('themeSun').classList.add('hidden');
+                document.getElementById('themeMoon').classList.remove('hidden');
+            } else {
+                html.classList.add('light');
+                document.getElementById('themeSun').classList.remove('hidden');
+                document.getElementById('themeMoon').classList.add('hidden');
+            }
+        };
+
+        window.setCurrency = (currency) => {
+            currentCurrency = currency;
+            document.getElementById('btnCurrencyEGP').className = currency === 'EGP' 
+                ? 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 bg-blue-600 text-white shadow-md shadow-blue-600/10'
+                : 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 text-slate-400 dark:text-slate-400 light:text-slate-600';
+            document.getElementById('btnCurrencyUSD').className = currency === 'USD' 
+                ? 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 bg-blue-600 text-white shadow-md shadow-blue-600/10'
+                : 'px-3 py-1.5 rounded-lg text-xs font-bold transition-all duration-200 text-slate-400 dark:text-slate-400 light:text-slate-600';
+            window.appRouter.sync();
+        };
+
+        class ClientRouter {
+            constructor(routes) {
+                this.routes = routes;
+                window.addEventListener('hashchange', () => this.handleRouting());
+                this.handleRouting();
+            }
+            handleRouting() {
+                let hash = window.location.hash || '#/';
+                if (hash.startsWith('#')) hash = hash.substring(1);
+                
+                let routeHandler = this.routes[hash] || this.routes['/'];
+                
+                if (hash !== '/' && hash.startsWith('/')) {
+                    const cleanSlug = hash.substring(1);
+                    if (STORES_DATABASE[cleanSlug]) {
+                        routeHandler = () => window.renderCategoryStorePage(cleanSlug);
+                    }
+                }
+                routeHandler();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            navigate(path) {
+                window.location.hash = path;
+            }
+            sync() {
+                this.handleRouting();
+            }
+        }
+
+        window.renderDashboardHome = () => {
+            const container = document.getElementById('viewContainer');
+            container.innerHTML = `
+                <div class="relative rounded-3xl overflow-hidden mb-16 p-8 md:p-12 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 border border-slate-800 shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-blue-500/10 via-transparent to-transparent pointer-events-none"></div>
+                    <div class="max-w-2xl text-center md:text-right space-y-4 z-10">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-400 border border-blue-500/20">⚡ شحن وتزويد فوري آمن</span>
+                        <h1 class="text-4xl md:text-6xl font-black tracking-tight text-white font-sans leading-tight">شحن ألعابك ودعم حساباتك في <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">مكان واحد</span></h1>
+                        <p class="text-slate-400 dark:text-slate-400 light:text-slate-700 text-sm md:text-base leading-relaxed max-w-lg">مرحباً بك في متجر مينو الاحترافي. خدمات شحن فوري وآمن للألعاب الإلكترونية وتزويد منصات التواصل الاجتماعي بأعلى كفاءة وسرعة.</p>
+                    </div>
+                    <div class="w-full md:w-auto flex flex-wrap justify-center gap-4 z-10">
+                        <button onclick="window.appRouter.navigate('/pubg')" class="px-6 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 font-bold text-sm tracking-wide text-white shadow-lg shadow-blue-600/20 transition-all hover:-translate-y-0.5">شحن ببجي UC</button>
+                        <button onclick="window.appRouter.navigate('/tiktok')" class="px-6 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 font-bold text-sm tracking-wide text-slate-200 border border-slate-700 transition-all hover:-translate-y-0.5">خدمات تيك توك</button>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-2 mb-8">
+                    <h2 class="text-2xl font-bold tracking-tight text-white dark:text-white light:text-slate-900">أقسام المتجر المتاحة</h2>
+                    <p class="text-xs text-slate-400 dark:text-slate-400 light:text-slate-600">اختر المنصة أو اللعبة لبدء تخصيص وشحن باقتك المفضلة فورياً</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- PUBG -->
+                    <div onclick="window.appRouter.navigate('/pubg')" class="group cursor-pointer bg-slate-900/40 dark:bg-slate-900/40 light:bg-slate-100 border border-slate-800/80 dark:border-slate-800/80 light:border-slate-200 rounded-2xl overflow-hidden hover:border-blue-500/50 transition-all duration-300 shadow-xl hover:shadow-blue-500/5">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://i.ibb.co/nqQfHg30/Screenshot.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="PUBG" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-white dark:text-white light:text-slate-900 mb-1 group-hover:text-blue-400 transition-colors">ببجي موبايل | PUBG Mobile UC</h3>
+                            <p class="text-xs text-slate-400 dark:text-slate-400 light:text-slate-600 mb-4">شحن شدات ببجي عن طريق الآيدي ID فوري وبأرخص الأسعار.</p>
+                            <span class="text-xs font-bold text-blue-400 flex items-center gap-1">تصفح العروض المتاحة &larr;</span>
+                        </div>
+                    </div>
+
+                    <!-- Free Fire -->
+                    <div onclick="window.appRouter.navigate('/freefire')" class="group cursor-pointer bg-slate-900/40 dark:bg-slate-900/40 light:bg-slate-100 border border-slate-800/80 dark:border-slate-800/80 light:border-slate-200 rounded-2xl overflow-hidden hover:border-orange-500/50 transition-all duration-300 shadow-xl hover:shadow-orange-500/5">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://i.ibb.co/wZ3vrThM/IMG.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Free Fire" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-white dark:text-white light:text-slate-900 mb-1 group-hover:text-orange-400 transition-colors">فري فاير | Free Fire Diamonds</h3>
+                            <p class="text-xs text-slate-400 dark:text-slate-400 light:text-slate-600 mb-4">شحن مجوهرات فري فاير بالمعرف الرسمي بسرعة فائقة وثقة تامة.</p>
+                            <span class="text-xs font-bold text-orange-400 flex items-center gap-1">تصفح العروض المتاحة &larr;</span>
+                        </div>
+                    </div>
+
+                    <!-- TikTok -->
+                    <div onclick="window.appRouter.navigate('/tiktok')" class="group cursor-pointer bg-slate-900/40 dark:bg-slate-900/40 light:bg-slate-100 border border-slate-800/80 dark:border-slate-800/80 light:border-slate-200 rounded-2xl overflow-hidden hover:border-pink-500/50 transition-all duration-300 shadow-xl hover:shadow-pink-500/5">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://i.ibb.co/Dfk1HSPH/Screenshot.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="TikTok" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-white dark:text-white light:text-slate-900 mb-1 group-hover:text-pink-400 transition-colors">تيك توك | TikTok Services</h3>
+                            <p class="text-xs text-slate-400 dark:text-slate-400 light:text-slate-600 mb-4">دعم وتزويد متابعين، لايكات، مشاهدات، وحفظ للمنشورات بجودة ممتازة.</p>
+                            <span class="text-xs font-bold text-pink-400 flex items-center gap-1">تصفح العروض المتاحة &larr;</span>
+                        </div>
+                    </div>
+
+                    <!-- Telegram -->
+                    <div onclick="window.appRouter.navigate('/telegram')" class="group cursor-pointer bg-slate-900/40 dark:bg-slate-900/40 light:bg-slate-100 border border-slate-800/80 dark:border-slate-800/80 light:border-slate-200 rounded-2xl overflow-hidden hover:border-cyan-500/50 transition-all duration-300 shadow-xl hover:shadow-cyan-500/5">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://i.ibb.co/1f24cJcm/Screenshot.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="Telegram" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-white dark:text-white light:text-slate-900 mb-1 group-hover:text-cyan-400 transition-colors">تيليجرام | Telegram Boosting</h3>
+                            <p class="text-xs text-slate-400 dark:text-slate-400 light:text-slate-600 mb-4">رشق وتزويد قنوات ومجموعات تيليجرام بأعضاء حقيقيين متفاعلين.</p>
+                            <span class="text-xs font-bold text-cyan-400 flex items-center gap-1">تصفح العروض المتاحة &larr;</span>
+                        </div>
+                    </div>
+
+                    <!-- YouTube -->
+                    <div onclick="window.appRouter.navigate('/youtube')" class="group cursor-pointer bg-slate-900/40 dark:bg-slate-900/40 light:bg-slate-100 border border-slate-800/80 dark:border-slate-800/80 light:border-slate-200 rounded-2xl overflow-hidden hover:border-red-500/50 transition-all duration-300 shadow-xl hover:shadow-red-500/5">
+                        <div class="h-48 overflow-hidden relative">
+                            <img src="https://i.ibb.co/ymK3T3hF/Screenshot.jpg" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt="YouTube" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-lg font-bold text-white dark:text-white light:text-slate-900 mb-1 group-hover:text-red-400 transition-colors">يوتيوب | YouTube Services</h3>
+                            <p class="text-xs text-slate-400 dark:text-slate-400 light:text-slate-600 mb-4">تحقيق شروط الربح، ساعات مشاهدة علنية حقيقية ومشتركين بضمان كامل.</p>
+                            <span class="text-xs font-bold text-red-400 flex items-center gap-1">تصفح العروض المتاحة &larr;</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        };
+
+        window.renderCategoryStorePage = (slug) => {
+            const store = STORES_DATABASE[slug];
+            const container = document.getElementById('viewContainer');
+            
+            let packageItemsHtml = '';
+            store.items.forEach((item, index) => {
+                let dynamicPrice = item.priceEgp;
+                let controlsHtml = '';
+
+                if (item.isSlidablyVariable) {
+                    dynamicPrice = item.priceEgp + (tiktokQualitySliderVal - 90) * 2;
+                    controlsHtml = `
+                        <div class="mt-3 p-3 bg-slate-950/40 rounded-xl border border-slate-800/60 space-y-2" onclick="event.stopPropagation()">
+                            <div class="flex justify-between text-xs font-medium">
+                                <span class="text-slate-400">معدل كفاءة الضمان للجودة:</span>
+                                <span class="text-blue-400 font-bold">${tiktokQualitySliderVal}% كفاءة</span>
+                            </div>
+                            <input type="range" min="90" max="100" value="${tiktokQualitySliderVal}" 
+                                oninput="window.updateTiktokQualitySlider(this.value, '${slug}')" 
+                                class="w-full accent-blue-500 h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer" />
+                        </div>
+                    `;
+                }
+
+                packageItemsHtml += `
+                    <div onclick="window.initiateOrderFormFlow('${slug}', ${index}, ${dynamicPrice})" class="group cursor-pointer p-5 bg-slate-900/40 dark:bg-slate-900/40 light:bg-slate-100 border border-slate-800 dark:border-slate-800 light:border-slate-200 rounded-2xl flex flex-col justify-between hover:border-blue-500/40 hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-300">
+                        <div>
+                            <div class="flex items-start justify-between gap-2 mb-2">
+                                <h4 class="font-bold text-white dark:text-white light:text-slate-900 group-hover:text-blue-400 transition-colors">${item.name}</h4>
+                                <span class="px-2.5 py-1 text-[10px] font-bold rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 whitespace-nowrap">متوفر فوري</span>
+                            </div>
+                            ${controlsHtml}
+                        </div>
+                        <div class="mt-5 flex items-center justify-between pt-4 border-t border-slate-800/60 dark:border-slate-800/60 light:border-slate-200">
+                            <span class="text-slate-400 text-xs">السعر الإجمالي:</span>
+                            <span class="text-lg font-black text-white dark:text-white light:text-blue-600 font-mono">${window.calculatePrice(dynamicPrice)}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = `
+                <button onclick="window.appRouter.navigate('/')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-400 dark:text-slate-400 light:text-slate-600 hover:text-white mb-6 transition-colors">
+                    &rarr; العودة للرئيسية
+                </button>
+
+                <div class="relative h-64 md:h-80 rounded-3xl overflow-hidden mb-12 border border-slate-800 shadow-2xl">
+                    <img src="${store.banner}" class="w-full h-full object-cover" alt="${store.title}" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                    <div class="absolute bottom-6 right-6 left-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                        <h1 class="text-2xl md:text-4xl font-extrabold text-white font-sans">${store.title}</h1>
+                        <span class="px-4 py-1.5 rounded-xl text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30 backdrop-blur-md self-start md:self-auto">توصيل آلي فوري ⚡</span>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="flex flex-col gap-1">
+                        <h2 class="text-xl font-bold text-white dark:text-white light:text-slate-900">الباقات والخدمات المتوفرة</h2>
+                        <p class="text-xs text-slate-400 dark:text-slate-400 light:text-slate-600">اختر العرض المناسب لتوليد استمارة الدفع الإلكترونية المشفرة</p>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        ${packageItemsHtml}
+                    </div>
+                </div>
+            `;
+        };
+
+        window.updateTiktokQualitySlider = (val, slug) => {
+            tiktokQualitySliderVal = parseInt(val);
+            window.renderCategoryStorePage(slug);
+        };
+
+        window.initiateOrderFormFlow = (slug, index, calculatedPrice) => {
+            const store = STORES_DATABASE[slug];
+            const item = store.items[index];
+            activeCheckoutService = {
+                categorySlug: slug,
+                categoryTitle: store.title,
+                name: item.name,
+                priceEgp: calculatedPrice,
+                inputType: store.type,
+                placeholder: store.placeholder
+            };
+
+            const container = document.getElementById('viewContainer');
+            container.innerHTML = `
+                <button onclick="window.renderCategoryStorePage('${slug}')" class="inline-flex items-center gap-2 text-xs font-bold text-slate-400 dark:text-slate-400 light:text-slate-600 hover:text-white mb-6 transition-colors">
+                    &rarr; العودة لقائمة الباقات
+                </button>
+
+                <div class="max-w-2xl mx-auto bg-slate-900/60 dark:bg-slate-900/60 light:bg-white border border-slate-800 dark:border-slate-800 light:border-slate-200 rounded-3xl p-6 md:p-8 shadow-2xl space-y-8">
+                    <div class="border-b border-slate-800/80 dark:border-slate-800/80 light:border-slate-200 pb-5">
+                        <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">${store.title}</span>
+                        <h2 class="text-2xl font-black text-white dark:text-white light:text-slate-900 mt-1">تأكيد ومراجعة طلبك المباشر</h2>
+                        <div class="mt-4 flex items-center justify-between p-3.5 bg-slate-950/40 dark:bg-slate-950/40 light:bg-slate-100 rounded-xl border border-slate-800/40 dark:border-slate-800/40 light:border-slate-300">
+                            <span class="text-sm font-medium text-slate-300 dark:text-slate-300 light:text-slate-700">${item.name}</span>
+                            <span class="text-lg font-black text-blue-400 font-mono">${window.calculatePrice(calculatedPrice)}</span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-bold text-slate-200 dark:text-slate-200 light:text-slate-800">1. معلومات الحساب المستهدف</h3>
+                        <div>
+                            <label class="block text-xs text-slate-400 dark:text-slate-400 light:text-slate-600 mb-2 font-medium">الآيدي أو الرابط المطلوب شحنه وتزويده *</label>
+                            <input type="text" id="orderTargetInput" class="w-full px-4 py-3.5 rounded-xl bg-slate-950/60 dark:bg-slate-950/60 light:bg-slate-100 border border-slate-800 dark:border-slate-800 light:border-slate-300 text-white dark:text-white light:text-slate-900 text-sm focus:outline-none focus:border-blue-500 font-sans tracking-wide transition-colors" placeholder="${store.placeholder}" />
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-amber-500/10 border border-amber-500/20 rounded-2xl space-y-2">
+                        <h4 class="text-xs font-bold text-amber-400 flex items-center gap-1.5">⚠️ شروط وقوانين هامة قبل الدفع:</h4>
+                        <ul class="text-[11px] text-amber-300/90 space-y-1.5 list-none pr-0">
+                            <li>• يرجى التأكد من أن الحساب عام (Public) وليس خاص (Private) قبل الطلب.</li>
+                            <li>• لا تطلب خدمتين لنفس الرابط في نفس الوقت حتى يكتمل الطلب الأول.</li>
+                            <li>• في حال وجود أي مشكلة، تواصل معنا فوراً للمساعدة.</li>
+                        </ul>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div class="flex flex-col">
+                            <h3 class="text-sm font-bold text-slate-200 dark:text-slate-200 light:text-slate-800">2. بوابة التحويل المالي (المحافظ الإلكترونية الذكية)</h3>
+                            <p class="text-[11px] text-slate-400 dark:text-slate-400 light:text-slate-600 mt-0.5">يرجى تحويل القيمة الإجمالية المطلوبة إلى الرقم الرسمي للمتجر الموضح أدناه</p>
+                        </div>
+                        
+                        <div class="p-4 bg-blue-600/10 border border-blue-500/20 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div class="flex flex-col text-center sm:text-right">
+                                <span class="text-xs text-slate-400">رقم المحفظة الوجهة المعتمد للتحويل:</span>
+                                <span class="text-xl font-mono font-black text-blue-400 select-all tracking-wider mt-0.5">01097841806</span>
+                            </div>
+                            <button onclick="navigator.clipboard.writeText('01097841806'); alert('تم نسخ رقم المحفظة بنجاح');" class="px-3.5 py-1.5 rounded-lg text-xs bg-blue-600 hover:bg-blue-700 text-white font-bold transition-colors">نسخ الرقم</button>
+                        </div>
+
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                            <div onclick="window.selectWalletProvider(this, 'Vodafone Cash')" class="wallet-card cursor-pointer p-3 rounded-xl border border-slate-800 dark:border-slate-800 light:border-slate-200 bg-slate-950/20 flex flex-col items-center justify-center gap-2 hover:border-blue-500/40 transition-all">
+                                <img src="https://i.ibb.co/9mVrd77C/1783569777780.png" class="h-10 w-10 object-contain rounded-lg" alt="Vodafone Cash" />
+                                <span class="text-xs font-medium">فودافون كاش</span>
+                            </div>
+                            <div onclick="window.selectWalletProvider(this, 'Etisalat Cash')" class="wallet-card cursor-pointer p-3 rounded-xl border border-slate-800 dark:border-slate-800 light:border-slate-200 bg-slate-950/20 flex flex-col items-center justify-center gap-2 hover:border-blue-500/40 transition-all">
+                                <img src="https://i.ibb.co/MkQxZrcr/1783569858025.png" class="h-10 w-10 object-contain rounded-lg" alt="Etisalat Cash" />
+                                <span class="text-xs font-medium">اتصالات كاش</span>
+                            </div>
+                            <div onclick="window.selectWalletProvider(this, 'Orange Cash')" class="wallet-card cursor-pointer p-3 rounded-xl border border-slate-800 dark:border-slate-800 light:border-slate-200 bg-slate-950/20 flex flex-col items-center justify-center gap-2 hover:border-blue-500/40 transition-all">
+                                <img src="https://i.ibb.co/GQnvkrL7/1783569931629.png" class="h-10 w-10 object-contain rounded-lg" alt="Orange Cash" />
+                                <span class="text-xs font-medium">أورنج كاش</span>
+                            </div>
+                            <div onclick="window.selectWalletProvider(this, 'We Pay')" class="wallet-card cursor-pointer p-3 rounded-xl border border-slate-800 dark:border-slate-800 light:border-slate-200 bg-slate-950/20 flex flex-col items-center justify-center gap-2 hover:border-blue-500/40 transition-all">
+                                <img src="https://i.ibb.co/Txk3gfSB/1783570007111.png" class="h-10 w-10 object-contain rounded-lg" alt="We Pay" />
+                                <span class="text-xs font-medium">وي باي</span>
+                            </div>
+                        </div>
+                        <input type="hidden" id="selectedWalletProviderInput" value="" />
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs text-slate-400 dark:text-slate-400 light:text-slate-600 mb-2 font-medium">الرقم الذي تم التحويل منه *</label>
+                            <input type="text" id="orderSenderWalletInput" class="w-full px-4 py-3.5 rounded-xl bg-slate-950/60 dark:bg-slate-950/60 light:bg-slate-100 border border-slate-800 dark:border-slate-800 light:border-slate-300 text-white dark:text-white light:text-slate-900 text-sm focus:outline-none focus:border-blue-500 font-mono tracking-wide" placeholder="01xxxxxxxxx" />
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 dark:text-slate-400 light:text-slate-600 mb-2 font-medium">المبلغ المحول بدقة *</label>
+                            <input type="number" id="orderAmountTransferredInput" class="w-full px-4 py-3.5 rounded-xl bg-slate-950/60 dark:bg-slate-950/60 light:bg-slate-100 border border-slate-800 dark:border-slate-800 light:border-slate-300 text-white dark:text-white light:text-slate-900 text-sm focus:outline-none focus:border-blue-500 font-mono tracking-wide" placeholder="أدخل القيمة المحولة كاملة" />
+                        </div>
+                    </div>
+
+                    <button onclick="window.submitTransactionalCheckoutPipeline(this)" class="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-bold text-sm tracking-wide shadow-xl shadow-blue-600/10 transform hover:-translate-y-0.5 transition-all flex items-center justify-center gap-2">
+                        <span>تأكيد عملية إرسال الطلب</span>
+                        <span>تم (Submit)</span>
+                    </button>
+                </div>
+            `;
+        };
+
+        window.selectWalletProvider = (domNode, providerKey) => {
+            document.querySelectorAll('.wallet-card').forEach(card => {
+                card.classList.remove('border-blue-500', 'bg-blue-500/10', 'scale-[1.02]');
+            });
+            domNode.classList.add('border-blue-500', 'bg-blue-500/10', 'scale-[1.02]');
+            document.getElementById('selectedWalletProviderInput').value = providerKey;
+        };
+
+        window.submitTransactionalCheckoutPipeline = async (buttonNode) => {
+            const target = document.getElementById('orderTargetInput').value.trim();
+            const chosenWalletProvider = document.getElementById('selectedWalletProviderInput').value;
+            const senderWallet = document.getElementById('orderSenderWalletInput').value.trim();
+            const transferredAmount = document.getElementById('orderAmountTransferredInput').value.trim();
+
+            if (!target || !senderWallet || !transferredAmount) {
+                alert('يرجى ملء كافة الخانات الإلزامية النجمة (*) لمتابعة عملية المراجعة بنجاح.');
+                return;
+            }
+            if (!chosenWalletProvider) {
+                alert('يرجى اختيار بوابة المحفظة الإلكترونية المستخدمة لإتمام المعاملة بنجاح.');
+                return;
+            }
+
+            buttonNode.disabled = true;
+            buttonNode.innerHTML = `<span>جاري معالجة المعاملة...</span>`;
+
+            const timestampFormatted = new Date().toLocaleString('ar-EG', { timeZone: 'Africa/Cairo' });
+            
+            const structuralOrderEntity = {
+                platformTitle: "Meno Store",
+                categoryType: activeCheckoutService.categoryTitle,
+                selectedPackage: activeCheckoutService.name,
+                targetAccountIdentifier: target,
+                paymentProviderGateway: chosenWalletProvider,
+                senderFundingWallet: senderWallet,
+                claimedTransferredSum: transferredAmount,
+                currencyCodeUnit: currentCurrency,
+                clientSystemTimestamp: timestampFormatted
+            };
+
+            // 1. التخزين في قاعدة بيانات Firebase Firestore
+            const committedFirestoreLogId = await window.saveOrderToFirestore(structuralOrderEntity);
+
+            // 2. إرسال الإشعار التلقائي الفوري إلى حسابك في تيليجرام
+            const compiledTelegramArabicLogText = `
+🔔 *إشعار عملية دفع جديدة | Meno Store*
+──────────────────
+👤 *المسؤول المستهدف:* @Sdxgj
+📦 *نوع الطلب / القسم:* ${structuralOrderEntity.categoryType}
+💎 *الخدمة المختارة:* ${structuralOrderEntity.selectedPackage}
+🔗 *رابط الحساب / الآيدي المستهدف:* \`${structuralOrderEntity.targetAccountIdentifier}\`
+💳 *بوابة الدفع المحددة:* ${structuralOrderEntity.paymentProviderGateway}
+📱 *رقم محفظة المرسل (المحول منه):* \`${structuralOrderEntity.senderFundingWallet}\`
+💰 *المبلغ المحول والعملة:* ${structuralOrderEntity.claimedTransferredSum} ${structuralOrderEntity.currencyCodeUnit}
+⏰ *توقيت العملية الدقيق:* ${structuralOrderEntity.clientSystemTimestamp}
+📊 *معرف قاعدة البيانات Firestore ID:* \`${committedFirestoreLogId || "Failed to Log"}\`
+──────────────────
+`;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: ADMIN_CHAT_ID,
+                        text: compiledTelegramArabicLogText,
+                        parse_mode: "Markdown"
+                    })
+                });
+            } catch (telegramException) {
+                console.error("Critical connection drop executing Telegram API pipeline operations: ", telegramException);
+            }
+
+            // عرض واجهة نجاح المعاملة النهائية والـ Checkmark الشيك للعميل
+            const container = document.getElementById('viewContainer');
+            container.innerHTML = `
+                <div class="max-w-md mx-auto bg-slate-900/60 dark:bg-slate-900/60 light:bg-white border border-slate-800 dark:border-slate-800 light:border-slate-200 rounded-3xl p-8 text-center shadow-2xl space-y-6 my-12">
+                    <div class="w-20 h-20 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded-full flex items-center justify-center mx-auto animate-checkmark">
+                        <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+                    </div>
+                    <div class="space-y-2">
+                        <h2 class="text-2xl font-black text-white dark:text-white light:text-slate-900">تم وجاري تأكيد الدفع</h2>
+                        <p class="text-xs text-slate-400 dark:text-slate-400 light:text-slate-600 leading-relaxed">شكراً لثقتكم بـ متجر مينو. تم تسجيل طلبك بنجاح وجاري تدقيقه يدوياً من قبل فريق الدعم الفني لتنفيذ وتزويد الخدمة فورياً.</p>
+                    </div>
+                    <div class="p-3.5 bg-slate-950/40 rounded-xl border border-slate-800/40 font-mono text-[11px] text-slate-500 text-right space-y-1">
+                        <div>Log ID: ${committedFirestoreLogId || "Local Stored Only"}</div>
+                        <div>Timestamp: ${timestampFormatted}</div>
+                    </div>
+                    <button onclick="window.appRouter.navigate('/')" class="w-full py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs transition-colors">العودة للرئيسية</button>
+                </div>
+            `;
+        };
+
+        window.appRouter = new ClientRouter({
+            '/': window.renderDashboardHome
+        });
+    </script>
+</body>
+</html>
